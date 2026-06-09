@@ -1,14 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
-         https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
-         version="5.0">
-    
-    <display-name>UserManagement</display-name>
-    
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         id="WebApp_ID" version="5.0"
+         metadata-complete="true">
+
+    <display-name>studentmanager</display-name>
+
+    <!-- 默认首页（Servlet 列表页） -->
     <welcome-file-list>
+        <welcome-file>ListStudentServlet.do</welcome-file>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    
+
+    <!-- 请求与响应编码（UTF-8） -->
+    <request-character-encoding>UTF-8</request-character-encoding>
+    <response-character-encoding>UTF-8</response-character-encoding>
+
+    <!-- ================= 1. 学生信息列表 ================= -->
+    <servlet>
+        <servlet-name>ListStudentServlet</servlet-name>
+        <servlet-class>control.ListStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListStudentServlet</servlet-name>
+        <url-pattern>/ListStudentServlet.do</url-pattern>
+    </servlet-mapping>
+
+    <!-- ================= 2. 新增学生信息 ================= -->
+    <servlet>
+        <servlet-name>InsertStudentServlet</servlet-name>
+        <servlet-class>control.InsertStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InsertStudentServlet</servlet-name>
+        <url-pattern>/InsertStudentServlet.do</url-pattern>
+    </servlet-mapping>
+
+    <!-- ================= 3. 修改前：查询学生信息 ================= -->
+    <servlet>
+        <servlet-name>UpStudentServlet</servlet-name>
+        <servlet-class>control.UpStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpStudentServlet</servlet-name>
+        <url-pattern>/UpStudentServlet.do</url-pattern>
+    </servlet-mapping>
+
+    <!-- ================= 4. 修改后：执行更新 ================= -->
+    <servlet>
+        <servlet-name>DoStudentServlet</servlet-name>
+        <servlet-class>control.DoStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DoStudentServlet</servlet-name>
+        <url-pattern>/DoStudentServlet.do</url-pattern>
+    </servlet-mapping>
+
+    <!-- ================= 5. 删除前：查询学生信息 ================= -->
+    <servlet>
+        <servlet-name>ShowStudentServlet</servlet-name>
+        <servlet-class>control.ShowStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowStudentServlet</servlet-name>
+        <url-pattern>/ShowStudentServlet.do</url-pattern>
+    </servlet-mapping>
+
+    <!-- ================= 6. 删除后：执行删除 ================= -->
+    <servlet>
+        <servlet-name>DeleteStudentServlet</servlet-name>
+        <servlet-class>control.DeleteStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteStudentServlet</servlet-name>
+        <url-pattern>/DeleteStudentServlet.do</url-pattern>
+    </servlet-mapping>
+
+    <!-- ================= 7. 任务2：CSV 批量导入学生信息（上传文件 / 粘贴文本） ================= -->
+    <!-- 使用 @MultipartConfig 注解开启文件上传（Servlet 3.0+ 内置功能，无需额外 jar） -->
+    <servlet>
+        <servlet-name>ImportStudentServlet</servlet-name>
+        <servlet-class>control.ImportStudentServlet</servlet-class>
+        <multipart-config>
+            <max-file-size>10485760</max-file-size>
+            <max-request-size>20971520</max-request-size>
+            <file-size-threshold>0</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ImportStudentServlet</servlet-name>
+        <url-pattern>/ImportStudentServlet.do</url-pattern>
+    </servlet-mapping>
+
+    <!-- ================= 8. 任务2：直接导入服务器端预置的 CSV 文件 ================= -->
+    <servlet>
+        <servlet-name>LoadDefaultCsvServlet</servlet-name>
+        <servlet-class>control.LoadDefaultCsvServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoadDefaultCsvServlet</servlet-name>
+        <url-pattern>/LoadDefaultCsvServlet.do</url-pattern>
+    </servlet-mapping>
+
 </web-app>
